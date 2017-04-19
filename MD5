@@ -1,0 +1,9 @@
+8cf44fe515c87cb75a7a134c18c5dd29 *DESCRIPTION
+aefb94e5343ecb5a2bf0062eb687d05b *NAMESPACE
+d0d9a9727a0f1f34dc4440cf7b93234c *NEWS.md
+0c8ff54e49527b2c4f5373bef63e9f0e *R/ompr.roi.R
+8b6d1301a03915bf6d31e79c63314715 *R/with-roi.R
+dd5c724c39b8ef54e5fcf7c2ff08f7db *man/ompr.roi.Rd
+2b8550ffb67fec9398b0d45154dc4689 *man/with_ROI.Rd
+77cd50928140cfe8b24bcbee23c48390 *tests/testthat.R
+04812a755c3ca1c0e0f41ed43e43afa5 *tests/testthat/test-solver-roi.R
