@@ -145,7 +145,7 @@ test_that("bug 20161011 #82: problems with bound indexes", {
     add_variable(a[i, j, s], type = "binary", i = 1:N, j = 1:N, s = 1:3) %>%
     set_objective(0) %>%
     add_constraint(x[1] <= 1)
-  solve_model(model, with_ROI("glpk"))
+  expect_silent(solve_model(model, with_ROI("glpk")))
 })
 
 test_that("bug 20161116 #107: it works with no objective function", {
@@ -183,4 +183,68 @@ test_that("you can export the model as an ROI::OP object", {
 
   # fails if a non ompr model is passed to the function
   expect_error(as_ROI_model(TRUE))
+})
+
+test_that("ROI exports column/row duals", {
+  model <- MIPModel() %>%
+    add_variable(x[i], i = 1:10) %>%
+    set_objective(sum_expr(x[i], i = 1:10), sense = "min") %>%
+    add_constraint(x[i] >= i, i = 1:10)
+  result <- solve_model(model, with_ROI("glpk"))
+
+  column_duals <- get_column_duals(result)
+  row_duals <- get_row_duals(result)
+
+  expected_col_duals <- stats::setNames(rep.int(0, 10), ompr::variable_keys(model))
+
+  expected_row_duals <- rep.int(1, 10)
+
+  expect_equal(column_duals, expected_col_duals)
+  expect_equal(row_duals, expected_row_duals)
+})
+
+test_that("ROI returns NA for column/row duals of MIPs", {
+  model <- MIPModel() %>%
+    add_variable(x[i], i = 1:10, type = "integer") %>%
+    set_objective(sum_expr(x[i], i = 1:10), sense = "min") %>%
+    add_constraint(x[i] >= i, i = 1:10)
+  result <- solve_model(model, with_ROI("glpk"))
+
+  column_duals <- get_column_duals(result)
+  row_duals <- get_row_duals(result)
+
+  expected_col_duals <- NA_real_
+
+  # no row duals ATM
+  expected_row_duals <- NA_real_
+
+  expect_equal(column_duals, expected_col_duals)
+  expect_equal(row_duals, expected_row_duals)
+})
+
+test_that("it returns a solution even though the solution status is not optimal", {
+  result <- add_variable(MIPModel(), x, type = "continuous", lb = 10) %>%
+    set_objective(x, sense = "max") %>%
+    add_constraint(x <= 3) %>%
+    solve_model(with_ROI(solver = "glpk"))
+  expect_equal(result$status, "infeasible")
+  expect_true(!is.na(result$solution))
+  expect_true(!is.na(ompr::get_column_duals(result)))
+})
+
+test_that("it returns row duals", {
+  result_primal <- MILPModel() %>%
+    add_variable(x[i], i = 1:5, lb = 0) %>%
+    set_objective(5 * x[1] + 3 * x[2], sense = "max") %>%
+    add_constraint(sum_expr(x[i], i = 1:5) <= 10) %>%
+    solve_model(with_ROI("glpk"))
+
+  result_dual <- MILPModel() %>%
+    add_variable(y) %>%
+    set_objective(10 * y, sense = "min") %>%
+    add_constraint(y[rep.int(1, 5)] >= i, i = 1:5) %>%
+    solve_model(with_ROI("glpk"))
+
+  expect_equal(solver_status(result_primal), "optimal")
+  expect_equal(get_row_duals(result_primal), as.numeric(ompr::get_solution(result_dual, y)))
 })

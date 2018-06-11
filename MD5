@@ -1,11 +1,11 @@
-f408c1509074fc285213746577279cb5 *DESCRIPTION
+3a829391a3bfc88e49dec9d3aa6ed09f *DESCRIPTION
 086bd760fcd1ab49cc1861f65b6ed623 *NAMESPACE
-84a93790319936261668364888c4d59f *NEWS.md
-9f14a208b9c04a2a5eb8cf596525f990 *R/as-roi-model.R
+7f81ab31c11f8a87698596479230259a *NEWS.md
+5e6dd728778ec7f57c218decc954ab0d *R/as-roi-model.R
 0c8ff54e49527b2c4f5373bef63e9f0e *R/ompr.roi.R
-f625af3e06e99da522e444370f3acc24 *R/with-roi.R
+0fad0bc4dca1ddc0178b90b48a3fa8fb *R/with-roi.R
 cc33ee109a5eaaa66283ba352404fdd0 *man/as_ROI_model.Rd
 dd5c724c39b8ef54e5fcf7c2ff08f7db *man/ompr.roi.Rd
-2b8550ffb67fec9398b0d45154dc4689 *man/with_ROI.Rd
+55ac538ef31d38922c7d95c77a81474b *man/with_ROI.Rd
 77cd50928140cfe8b24bcbee23c48390 *tests/testthat.R
-e678fe1e2136eee54759028ebcdde242 *tests/testthat/test-solver-roi.R
+e671a3eaa48c99584aeba25b3dd08cc6 *tests/testthat/test-solver-roi.R
