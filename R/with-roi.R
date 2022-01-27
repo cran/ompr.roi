@@ -10,9 +10,13 @@
 #' row duals.
 #'
 #' @return a function: Model -> Solution that can be used
-#' together with \code{\link[ompr]{solve_model}}.
+#' together with \code{\link[ompr]{solve_model}}. You can find \code{ROI}'s
+#' original solver \code{message} and \code{status} information in
+#' \code{<return_value>$ROI}. The \code{ompr} status code is \code{"success"}
+#' if \code{ROI} returns \code{code = 0} and is \code{"error"} otherwise.
 #'
 #' @examples
+#' \dontrun{
 #' library(magrittr)
 #' library(ompr)
 #' library(ROI)
@@ -21,7 +25,7 @@
 #'  set_objective(x, sense = "max") %>%
 #'  add_constraint(x <= 5) %>%
 #'  solve_model(with_ROI(solver = "glpk", verbose = TRUE))
-#'
+#' }
 #' @references
 #' Kurt Hornik, David Meyer, Florian Schwendinger and Stefan Theussl (2016).
 #' ROI: R Optimization Infrastructure. <https://CRAN.R-project.org/package=ROI>
@@ -45,7 +49,7 @@ with_ROI <- function(solver, ...) {
 
     result <- ROI::ROI_solve(op, solver, ...)
 
-    status <- if (result$status$code == 0) "optimal" else "infeasible"
+    status <- if (result$status$code == 0) "success" else "error"
     solution <- ROI::solution(result, type = "primal", force = TRUE)
 
     variable_names <- ompr::variable_keys(model)
@@ -72,12 +76,20 @@ with_ROI <- function(solver, ...) {
 
     # the solution should be named
     names(solution) <- variable_names
-    solution <- ompr::new_solution(status = status,
-                    model = model,
-                    objective_value = result$objval + obj_constant,
-                    solution = solution,
-                    solution_column_duals = solution_column_duals,
-                    solution_row_duals = solution_row_duals)
+    solution <- ompr::new_solution(
+      status = status,
+      model = model,
+      objective_value = result$objval + obj_constant,
+      solution = solution,
+      solution_column_duals = solution_column_duals,
+      solution_row_duals = solution_row_duals,
+      additional_solver_output = list(
+        ROI = list(
+          status = result$status,
+          message = result$message
+        )
+      )
+    )
     solution
   }
 }
