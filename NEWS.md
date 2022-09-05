@@ -1,3 +1,7 @@
+# ompr.roi 1.0.1
+
+* `ompr.roi` does not use a deprecated {Matrix} 1.4-2 function anymore.
+
 # ompr.roi 1.0.0
 
 * `ompr.roi` is now licensed MIT.
