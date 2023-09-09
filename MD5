@@ -1,12 +1,12 @@
-3361d89d46b202c17bbbf15f6f74a9a1 *DESCRIPTION
+4176218c303fe881df399e06c85808b3 *DESCRIPTION
 269be22d8c6ee2e85ce2908a9d570a49 *LICENSE
 086bd760fcd1ab49cc1861f65b6ed623 *NAMESPACE
-3b3951d4a3c79826b489c123c2881ed5 *NEWS.md
+c31dc71121cc30418de7da5ce0112f95 *NEWS.md
 1b67f1a13fd5e2333ee7ade321397942 *R/as-roi-model.R
-0c8ff54e49527b2c4f5373bef63e9f0e *R/ompr.roi.R
+a28ca3d438cb2a57b61485ecfc63617d *R/ompr.roi-package.R
 a93ccb32b9795edbe1a4e5712970bda8 *R/with-roi.R
 cc33ee109a5eaaa66283ba352404fdd0 *man/as_ROI_model.Rd
-48510f9fa7a9b6f41661c39624f2d801 *man/ompr.roi.Rd
+70e5d5d242bba0a4ad44861e9dc900fe *man/ompr.roi-package.Rd
 8477198b48080bd383ea0631c6e8526f *man/with_ROI.Rd
 77cd50928140cfe8b24bcbee23c48390 *tests/testthat.R
 d1ad39c5542d2274e89f4cecb2903a76 *tests/testthat/test-solver-roi.R

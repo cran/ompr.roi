@@ -1,3 +1,8 @@
+# ompr.roi 1.0.2
+
+* Fixes a bug in how the package documentation was specified.
+* `ompr.roi` now requires at least R 3.5.0 because `ompr` requires it.
+
 # ompr.roi 1.0.1
 
 * `ompr.roi` does not use a deprecated {Matrix} 1.4-2 function anymore.
